@@ -5,6 +5,7 @@ import { useState } from "react";
 import Confetti from 'react-confetti'
 import { useWindowSize } from "react-use";
 import router from "next/router";
+import { supabase } from "@/lib/supabaseClient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,14 +19,25 @@ export default function Home() {
   const [description, setDescription] = useState('');
   const [done, setDone] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+
     e.preventDefault();
+
     if (!name || !description) {
       return;
     }
-    setDone(true);
+
+    const { error } = await supabase.from('entries').insert([{ name, description }]);
+
+    if (error) {
+      alert('Failed to submit, try again!');
+    } else {
+      setDone(true);
+    }
+
     setName('');
     setDescription('');
+
   };
 
   return (
