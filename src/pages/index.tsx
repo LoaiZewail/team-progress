@@ -55,7 +55,10 @@ export default function Home() {
           {
             !done ?
               <div className={styles.form}>
-                <img className={styles.formImg} src="/opteam_logo.png" alt="logo" />
+                <div className={styles.header}>
+                  <img className={styles.formImg} src="/opteam_logo.png" alt="logo" />
+                  <div onClick={() => router.push('/leaderboard')}>🏆</div>
+                </div>
                 <div className={styles.formTitle}>
                   Another chance to be awesome! 🎉
                   <br />Write your name and tell us what you did ..
